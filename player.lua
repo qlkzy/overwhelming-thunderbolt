@@ -19,19 +19,19 @@ function Player:draw()
 end
 
 function Player:up()
-    self.vy = -50
+    self.vy = -100
 end
 
 function Player:down()
-    self.vy = 50
+    self.vy = 100
 end
 
 function Player:left()
-    self.vx = -50
+    self.vx = -100
 end
 
 function Player:right()
-    self.vx = 50
+    self.vx = 100
 end
 
 function Player:stopX()
