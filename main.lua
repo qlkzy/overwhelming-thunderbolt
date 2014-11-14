@@ -62,6 +62,12 @@ function love.update(dt)
                 bullets[kb] = nil
             end
         end
+        local pbb = player:boundingBox()
+        if util.overlap(pbb, bb) then
+            local vec = util.unOverlap(pbb, bb)
+            player.x = player.x + vec.dx
+            player.y = player.y + vec.dy
+        end
     end
 end
 
