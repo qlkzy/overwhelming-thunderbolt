@@ -15,7 +15,7 @@ function Player.new()
 end
 
 function Player:boundingBox()
-    return {x0 = self.x, y0 = self.y, x1 = self.x + 20, y1 = self.y + 20}
+    return {x0 = self.x - 15, y0 = self.y - 15, x1 = self.x + 15, y1 = self.y + 15}
 end
 
 function Player:draw()

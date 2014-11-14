@@ -31,21 +31,17 @@ function love.update(dt)
     for ke, enemy in pairs(enemies) do
         local bb = enemy:boundingBox()
         local pbb = player:boundingBox()
-        -- temporary solution
-        if not util.overlap(bb, pbb) then
+
+        if util.overlap(bb, pbb) then
+            player:hurt(10)
+        else
+            -- temporary solution
             enemy:update(player, dt)
         end
 
-        if player.x > bb.x0 and player.x < bb.x1 and player.y > bb.y0 and player.y < bb.y1 then
-            player:hurt(10)
-        end
         if player:isDead() then
             love.window.setTitle("You Died!")
             player:death()
-        end
-
-        for _, enemy in pairs(enemies) do
-            
         end
 
         for kb, bullet in pairs(bullets) do
@@ -58,6 +54,7 @@ function love.update(dt)
             enemies[ke] = nil
         end
     end
+
     for _, barrier in pairs(barriers) do
         local bb = barrier:boundingBox()
         for kb, bullet in pairs(bullets) do
