@@ -32,7 +32,7 @@ function love.update(dt)
         local bb = enemy:boundingBox()
         local pbb = player:boundingBox()
         -- temporary solution
-        if not util.overlap then
+        if not util.overlap(bb, pbb) then
             enemy:update(player, dt)
         end
 

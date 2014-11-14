@@ -8,7 +8,7 @@ function util.within(point, box)
 end
 
 function util.overlap(box0, box1)
-    return util.witin({x = box0.x0, y = box0.y0}, box1) or
+    return util.within({x = box0.x0, y = box0.y0}, box1) or
         util.within({x = box0.x0, y = box0.y1}, box1) or 
         util.within({x = box0.x1, y = box0.y0}, box1) or
         util.within({x = box0.x1, y = box0.y1}, box1)
