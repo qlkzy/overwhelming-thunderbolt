@@ -25,18 +25,19 @@ function love.update(dt)
     -- time (fraction of a second) that has passed
     -- since the last call to love.update
     player:update(dt)
+    local pbb = player:boundingBox()
     for _, bullet in pairs(bullets) do
         bullet:update(dt)
     end
     for ke, enemy in pairs(enemies) do
         local bb = enemy:boundingBox()
-        local pbb = player:boundingBox()
 
+        enemy:update(player, dt)
         if util.overlap(bb, pbb) then
             player:hurt(10)
-        else
-            -- temporary solution
-            enemy:update(player, dt)
+            local vec = util.unOverlap(bb, pbb)
+            enemy.x = enemy.x + vec.dx
+            enemy.y = enemy.y + vec.dy
         end
 
         if player:isDead() then
@@ -62,7 +63,6 @@ function love.update(dt)
                 bullets[kb] = nil
             end
         end
-        local pbb = player:boundingBox()
         if util.overlap(pbb, bb) then
             local vec = util.unOverlap(pbb, bb)
             player.x = player.x + vec.dx
@@ -109,7 +109,7 @@ function love.mousepressed(x, y, button)
         table.insert(bullets, player:fire(x, y))
     end
 end
- 
+
 function love.mousereleased(x, y, button)
     -- handle mouse button releases
 end
