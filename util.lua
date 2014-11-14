@@ -25,7 +25,6 @@ end
 
 -- vector to move boxA by to avoid overlapping boxB
 function util.unOverlap(boxA, boxB)
-    print("unOverlapping")
     local cA = util.centre(boxA)
     local cB = util.centre(boxB)
     local dx = cA.x - cB.x
