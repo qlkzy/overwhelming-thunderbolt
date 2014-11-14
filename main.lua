@@ -10,6 +10,8 @@ local enemies = {}
 local barriers = {}
 
 function love.load()
+    love.window.setTitle("Overwhelming Thunderbolt")
+
     player = Player.new()
     love.graphics.setBackgroundColor(100, 100, 100)
     cursor = love.mouse.newCursor("crosshair.png", 10, 10)
@@ -22,31 +24,48 @@ function love.update(dt)
     -- simulate the passing of time---<dt> is the
     -- time (fraction of a second) that has passed
     -- since the last call to love.update
-   player:update(dt)
-   for _, bullet in pairs(bullets) do
-       bullet:update(dt)
-   end
-   for ke, enemy in pairs(enemies) do
-       enemy:update(dt)
-       local bb = enemy:boundingBox()
-       for kb, bullet in pairs(bullets) do
-           if util.within(bullet, bb) then
-               enemy:hurt(10)
-               bullets[kb] = nil
-           end
-       end
-       if enemy:isDead() then
-           enemies[ke] = nil
-       end
-   end
-   for _, barrier in pairs(barriers) do
-       local bb = barrier:boundingBox()
-       for kb, bullet in pairs(bullets) do
-           if util.within(bullet, bb) then
-               bullets[kb] = nil
-           end
-       end
-   end
+    player:update(dt)
+    for _, bullet in pairs(bullets) do
+        bullet:update(dt)
+    end
+    for ke, enemy in pairs(enemies) do
+        local bb = enemy:boundingBox()
+        local pbb = player:boundingBox()
+        -- temporary solution
+        if not util.overlap then
+            enemy:update(player, dt)
+        end
+
+        if player.x > bb.x0 and player.x < bb.x1 and player.y > bb.y0 and player.y < bb.y1 then
+            player:hurt(10)
+        end
+        if player:isDead() then
+            love.window.setTitle("You Died!")
+            player:death()
+        end
+
+        for _, enemy in pairs(enemies) do
+            
+        end
+
+        for kb, bullet in pairs(bullets) do
+            if util.within(bullet, bb) then
+                enemy:hurt(10)
+                bullets[kb] = nil
+            end
+        end
+        if enemy:isDead() then
+            enemies[ke] = nil
+        end
+    end
+    for _, barrier in pairs(barriers) do
+        local bb = barrier:boundingBox()
+        for kb, bullet in pairs(bullets) do
+            if util.within(bullet, bb) then
+                bullets[kb] = nil
+            end
+        end
+    end
 end
 
 function love.draw()
