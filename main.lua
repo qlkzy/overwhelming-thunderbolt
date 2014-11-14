@@ -1,9 +1,13 @@
 local Player = require "player"
 local Enemy = require "enemy"
+local Barrier = require "barrier"
+
+local util = require "util"
 
 local player
 local bullets = {}
 local enemies = {}
+local barriers = {}
 
 function love.load()
     player = Player.new()
@@ -11,6 +15,7 @@ function love.load()
     cursor = love.mouse.newCursor("crosshair.png", 10, 10)
     love.mouse.setCursor(cursor)
     table.insert(enemies, Enemy.new(10, 10))
+    table.insert(barriers, Barrier.new(100, 10, 105, 100))
 end
 
 function love.update(dt)
@@ -25,14 +30,21 @@ function love.update(dt)
        enemy:update(dt)
        local bb = enemy:boundingBox()
        for kb, bullet in pairs(bullets) do
-           local x, y = bullet.x, bullet.y
-           if x > bb.x0 and x < bb.x1 and y > bb.y0 and y < bb.y1 then
+           if util.within(bullet, bb) then
                enemy:hurt(10)
                bullets[kb] = nil
            end
        end
        if enemy:isDead() then
            enemies[ke] = nil
+       end
+   end
+   for _, barrier in pairs(barriers) do
+       local bb = barrier:boundingBox()
+       for kb, bullet in pairs(bullets) do
+           if util.within(bullet, bb) then
+               bullets[kb] = nil
+           end
        end
    end
 end
@@ -44,6 +56,9 @@ function love.draw()
     end
     for _, enemy in pairs(enemies) do
         enemy:draw(dt)
+    end
+    for _, barrier in pairs(barriers) do
+        barrier:draw(dt)
     end
 end
 
