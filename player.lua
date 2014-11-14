@@ -14,8 +14,18 @@ function Player.new()
     return self
 end
 
+function Player:boundingBox()
+    return {x0 = self.x, y0 = self.y, x1 = self.x + 20, y1 = self.y + 20}
+end
+
 function Player:draw()
     love.graphics.circle('fill', self.x, self.y, 20, 32)
+end
+
+function Player:death()
+    -- should fix
+    self.vy = -10000000
+    self.vx = 0
 end
 
 function Player:up()

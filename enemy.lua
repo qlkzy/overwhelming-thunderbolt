@@ -27,4 +27,15 @@ function Enemy:boundingBox()
     return {x0 = self.x, y0 = self.y, x1 = self.x + 10, y1 = self.y + 10}
 end
 
+function Enemy:update(player, dt)
+    vx = player.x - self.x
+    vy = player.y - self.y
+    mag = math.sqrt(vx * vx + vy * vy)
+    vx = vx / mag
+    vy = vy / mag
+
+    self.x = self.x + vx * 50 * dt
+    self.y = self.y + vy * 50 * dt
+end
+
 return Enemy
