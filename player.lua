@@ -22,6 +22,14 @@ function Player:draw()
     love.graphics.circle('fill', self.x, self.y, 20, 32)
 end
 
+function Player:decay(dt)
+    self.health = self.health - 10 * dt
+end
+
+function Player:gainHealth(dt)
+    self.health = self.health + 30
+end
+
 function Player:drawHPbar()
     local healthPercent = self.health / 500
     local scrWidth = love.graphics.getWidth()
@@ -33,7 +41,7 @@ function Player:drawHPbar()
     if self:isDead() then
         love.graphics.print("YOU DIED.", 350, scrHeight - 50)
     else
-        love.graphics.print(self.health, 400, scrHeight - 50)
+        love.graphics.print(math.floor(self.health), 400, scrHeight - 50)
     end
 end
 
@@ -41,6 +49,12 @@ function Player:death()
     -- should fix
     self.vy = -10000000
     self.vx = 0
+
+    -- Only available since LÖVE 0.9.2
+    -- local x, y, _ = love.window.getPosition()
+    -- love.window.setPosition(x + 5, y)
+    -- love.window.setPosition(x, y)
+    -- love.window.setPosition(x - 5, y)
 end
 
 function Player:up()

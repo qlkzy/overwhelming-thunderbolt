@@ -40,6 +40,7 @@ function love.update(dt)
     local enemy_count = 0
 
     player:update(dt)
+    player:decay(dt)
     local pbb = player:boundingBox()
     for _, bullet in pairs(bullets) do
         bullet:update(dt)
@@ -67,6 +68,7 @@ function love.update(dt)
             end
         end
         if enemy:isDead() then
+            player:gainHealth()
             enemies[ke] = nil
             max_enemies = max_enemies + 1
         else
