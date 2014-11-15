@@ -11,6 +11,7 @@ local barriers = {}
 local max_enemies = 1
 
 function love.load()
+    math.randomseed(os.time())
     love.window.setTitle("Overwhelming Thunderbolt")
 
     player = Player.new()
