@@ -17,7 +17,22 @@ function love.load()
     love.graphics.setBackgroundColor(100, 100, 100)
     cursor = love.mouse.newCursor("crosshair.png", 10, 10)
     love.mouse.setCursor(cursor)
-    table.insert(barriers, Barrier.new(100, 10, 105, 100))
+
+    local i = 1
+    while i <= 20 do
+        local x = math.random(love.graphics.getWidth())
+        local y = math.random(love.graphics.getHeight())
+        local orientation = math.random(2)
+        local length = math.random(150, 300)
+        local thickness = 5
+        
+        if orientation == 1 then
+            table.insert(barriers, Barrier.new(x, y, x + length, y + thickness))
+        else
+            table.insert(barriers, Barrier.new(x, y, x + thickness, y + length))
+        end
+        i = i + 1
+    end
 end
 
 function love.update(dt)
