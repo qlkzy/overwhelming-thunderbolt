@@ -9,7 +9,7 @@ setmetatable(Player, {
 })
 
 function Player.new()
-    local self = Hurtable.new(300, 300, 0, 0)
+    local self = Hurtable.new(300, 300, 0, 0, 500)
     setmetatable(self, Player)
     return self
 end
@@ -20,6 +20,17 @@ end
 
 function Player:draw()
     love.graphics.circle('fill', self.x, self.y, 20, 32)
+end
+
+function Player:drawHPbar()
+    local healthPercent = self.health / 500
+    local scrWidth = love.graphics.getWidth()
+    local scrHeight = love.graphics.getHeight()
+    local r, g, b, a = love.graphics.getColor( )
+    love.graphics.setColor(255, healthPercent * 255, healthPercent * 255)
+    love.graphics.rectangle("fill", 0, scrHeight - 20, scrWidth * healthPercent, 20 )
+    love.graphics.setColor(r, g, b, a)
+    love.graphics.print(self.health, 400, scrHeight - 50)
 end
 
 function Player:death()

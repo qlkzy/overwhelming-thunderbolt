@@ -94,6 +94,8 @@ end
 
 function love.draw()
     player:draw()
+    player:drawHPbar()
+
     for _, bullet in pairs(bullets) do
         bullet:draw()
     end
