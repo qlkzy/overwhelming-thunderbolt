@@ -33,7 +33,7 @@ function love.update(dt)
 
         enemy:update(player, dt)
         if util.overlap(bb, pbb) then
-            player:hurt(10)
+            player:hurt(math.floor(200 * dt))
             local vec = util.unOverlap(bb, pbb)
             enemy.x = enemy.x + vec.dx
             enemy.y = enemy.y + vec.dy
