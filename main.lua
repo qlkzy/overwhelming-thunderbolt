@@ -127,21 +127,21 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    if key == "up" then
+    if key == "up" or key == "w" then
         player:up()
-    elseif key == "down" then
+    elseif key == "down" or key == "s" then
         player:down()
-    elseif key == "left" then
+    elseif key == "left" or key == "a" then
         player:left()
-    elseif key == "right" then
+    elseif key == "right" or key == "d" then
         player:right()
     end
 end
 
 function love.keyreleased(key)
-    if key == "up" or key == "down" then
+    if key == "up" or key == "w" or key == "down" or key == "s" then
         player:stopY()
-    elseif key == "left" or key == "right" then
+    elseif key == "left" or key == "a" or key == "right" or key == "d" then
         player:stopX()
     end
 end
