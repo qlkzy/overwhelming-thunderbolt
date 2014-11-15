@@ -18,6 +18,7 @@ function love.load()
     love.graphics.setBackgroundColor(100, 100, 100)
     cursor = love.mouse.newCursor("crosshair.png", 10, 10)
     love.mouse.setCursor(cursor)
+    zombie = love.graphics.newImage("zombie.png")
 
     local i = 1
     while i <= 20 do

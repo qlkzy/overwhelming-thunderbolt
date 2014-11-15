@@ -7,6 +7,9 @@ setmetatable(Enemy, {
     __index = Hurtable
 })
 
+local image = love.graphics.newImage("zombie.png")
+local scaleFactor = 1.5
+
 function Enemy.new(x, y)
     local max_x = love.graphics.getWidth()
     local max_y = love.graphics.getHeight()
@@ -17,14 +20,16 @@ function Enemy.new(x, y)
 end
 
 function Enemy:draw()
-    local r,g,b,a = love.graphics.getColor()
-    love.graphics.setColor(255, 0, 0)
-    love.graphics.circle('fill', self.x, self.y, 10, 16)
-    love.graphics.setColor(r,g,b,a)
+    love.graphics.draw(image, self.x, self.y, 0, scaleFactor)
 end
 
 function Enemy:boundingBox()
-    return {x0 = self.x, y0 = self.y, x1 = self.x + 10, y1 = self.y + 10}
+    return {
+	x0 = self.x,
+	y0 = self.y,
+	x1 = self.x + image:getWidth() * scaleFactor,
+	y1 = self.y + image:getHeight() * scaleFactor
+    }
 end
 
 function Enemy:update(player, dt)
