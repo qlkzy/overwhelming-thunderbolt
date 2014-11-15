@@ -30,7 +30,11 @@ function Player:drawHPbar()
     love.graphics.setColor(255, healthPercent * 255, healthPercent * 255)
     love.graphics.rectangle("fill", 0, scrHeight - 20, scrWidth * healthPercent, 20 )
     love.graphics.setColor(r, g, b, a)
-    love.graphics.print(self.health, 400, scrHeight - 50)
+    if self:isDead() then
+        love.graphics.print("YOU DIED.", 350, scrHeight - 50)
+    else
+        love.graphics.print(self.health, 400, scrHeight - 50)
+    end
 end
 
 function Player:death()
